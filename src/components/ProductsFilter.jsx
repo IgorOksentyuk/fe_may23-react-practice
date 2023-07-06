@@ -4,7 +4,6 @@ export const ProductsFilter = ({
   setSelectedUserName,
 }) => {
   const users = ['All', ...new Set(products.map(product => product.user))];
-  console.log(selectedUserName);
 
   return (
     <div className="block">
