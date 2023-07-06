@@ -2,6 +2,8 @@ export const ProductsFilter = ({
   products,
   selectedUserName,
   setSelectedUserName,
+  query,
+  setQuery,
 }) => {
   const users = ['All', ...new Set(products.map(product => product.user))];
 
@@ -42,7 +44,7 @@ export const ProductsFilter = ({
               type="text"
               className="input"
               placeholder="Search"
-              value="qwe"
+              onChange={event => setQuery(event.target.value)}
             />
 
             <span className="icon is-left">

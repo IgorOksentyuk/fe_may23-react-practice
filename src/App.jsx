@@ -22,12 +22,19 @@ const products = productsFromServer.map(product => ({
   user: userById(categoreById(product.categoryId).ownerId),
 }));
 
-function getFilteredProducts(allProducts, selectedName) {
+function getFilteredProducts(allProducts, selectedName, query) {
   const visibleProducts = allProducts;
+  const trimmedQuery = query.trim().toLowerCase();
 
   if (selectedName !== 'All') {
     return visibleProducts.filter(
       product => product.user.name === selectedName,
+    );
+  }
+
+  if (trimmedQuery) {
+    return visibleProducts.filter(
+      product => product.category.title.toLowerCase().includes(trimmedQuery),
     );
   }
 
@@ -36,7 +43,12 @@ function getFilteredProducts(allProducts, selectedName) {
 
 export const App = () => {
   const [selectedUserName, setSelectedUserName] = useState('All');
-  const visibleProducts = getFilteredProducts(products, selectedUserName);
+  const [query, setQuery] = useState('');
+  const visibleProducts = getFilteredProducts(
+    products,
+    selectedUserName,
+    query,
+  );
 
   return (
     <div className="section">
@@ -47,6 +59,8 @@ export const App = () => {
           products={products}
           selectedUserName={selectedUserName}
           setSelectedUserName={setSelectedUserName}
+          query={query}
+          setQuery={setQuery}
         />
 
         <div className="box table-container">
